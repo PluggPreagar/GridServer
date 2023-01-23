@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="grid-with-filter">
+      <div class="grid-filter">
+        <select name="cars" id="cars">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+      </div>
+      <div id="grid-container" class="grid-container">
+        <div id="grid_0_1" class="grid-cross"></div>
+        <div id="grid_0_2" class="grid-head">2</div>
+        <div id="grid_0_3" class="grid-head">3</div>
+        <div id="grid_1_1" class="grid-idx">4</div>
+        <div id="grid_1_2" class="grid-item grid-odd" contentEditable="true">5</div>
+        <div id="grid_1_3" class="grid-item grid-odd" contentEditable="true">6</div>
+        <div id="grid_2_1" class="grid-idx">7</div>
+        <div id="grid_2_2" class="grid-item" contentEditable="true">8</div>
+        <div id="grid_2_3" class="grid-item" contentEditable="true">9</div>
+      </div>
+    </div>
+  </div>
+  <div id="spacer">
+
+  </div>
+  <div id="log_div">
+    <div class="index">
+      <div id="load" onclick="grid.resize_items( 3, 3 ) ;grid.reset();grid.load();"> reset </div>
+      <div id="load" onclick="getDataFromUrlAsync(grid);"> read ... </div>
+      <div id="grid_size" onclick="enableEditing(this);"> 3 x 3 </div>
+    </div>
+    <textarea id="log" rows="5" cols="40" readonly></textarea>
+    <textarea id="hint" rows="5" cols="80" readonly></textarea>
+  </div>
+
+  <script src="util.js"></script>
+  <script src="grid.js"></script>
+  <script src="menu.js"></script>
+  <!--<script src="script.js"></script>-->
+  <script src="connect.js"></script>
+  <script src="event.js"></script>
+  <script src="init.js"></script>
+  <!--<script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer>-->
+  </script>
+
+</body>
+
+</html>

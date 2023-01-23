@@ -1,0 +1,101 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 20px auto auto;
+  border-radius: 5px;
+  padding: 2px;
+  font-size: 16px;  
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+
+.grid-item:hover {
+  background__: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.grid-item {
+  border: 1px solid transparent; /* prevent wobbeling on hover*/ 
+  border-radius: 5px;
+  /* border: none; */
+  padding: 2px;
+  text-align: center;
+}
+
+
+.grid-idx {
+  padding: 2px;
+  border: 1px solid transparent; /* prevent wobbeling on hover*/ 
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.grid-head {
+  padding: 2px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+}
+
+-- fail
+-- .grid-container > *:nth-child(3n + 5), .grid-container > *:nth-child(3n + 6) {
+--  background: aliceblue;
+-- }
+
+
+.grid-odd{
+  background-color: rgb(236, 249, 253, 0.8);
+  border-radius: 5px;
+}
+
+
+.index {
+  float: left;
+  padding-right: 10px;
+}
+
+.grid-filter{
+  padding: 10px 20px 10px 20px;  
+}
+
+.grid-with-filter{
+  float: right;
+  width: 95%;
+  padding: 10px 20px 10px 20px;
+  border: 1px solid lightblue;
+  border-radius: 5px;
+  margin: 10px;
+  
+}
+
+
+.modified { 
+  border: 1px dashed rgba(255, 0, 0, 0.5) ;
+  border-radius: 5px;
+}
+
+.modified:hover { 
+  border: 1px solid rgba(255, 0, 0, 0.5) ;
+  border-radius: 5px;
+}
+
+
+
+#spacer{
+  clear: both;
+  height: 100px;
+}
+
+#log_div{
+  margin-top: 50px;
+}
+
+#hint{
+  color: red
+}
