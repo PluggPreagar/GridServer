@@ -1,2 +1,4 @@
 /.idea
 /static/.replit
+/static/.cache
+/static/.config

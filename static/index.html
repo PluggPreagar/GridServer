@@ -33,19 +33,44 @@
     </div>
   </div>
 
- 
-  <div id="menu">
-    <div id="context-menu">
+
+  <!-- https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724 -->
+  <div id="menu" style="display: none;"> 
+    <div id="context-menu0">
       <div class="item">Option 1</div>
-      <div class="item">Option 2</div>
+      <div class="item" onclick="alert('asdad');">Option 2</div>
       <div class="item">Option 3</div>
       <div class="item">Option 4</div>
       <div class="item">Option 5</div>
     </div>
   </div>
 
+    <div id="context-menu">
+        <ul id="myUL">
+          <li><span class="caret">Beverages</span>
+            <ul class="nested">
+              <li>Water</li>
+              <li>Coffee</li>
+              <li><span class="caret">Tea</span>
+                <ul class="nested">
+                  <li onclick="alert('asdad');">White Tea click</li>
+                  <li><span class="caret">Green Tea</span>
+                    <ul class="nested">
+                      <li>Sencha</li>
+                      <li onclick="contextMenuClose();grid.resize_items( 3, 3 ) ;grid.reset();grid.load();">reset</li>
+                      <li onclick="contextMenuClose();getDataFromUrlAsync(grid);">read</li>
+                      <li>Pi Lo Chun</li>
+                    </ul>
+                  <li>Black Tea</li>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+    </div>
   
-  
+
   <div id="spacer">
 
   </div>

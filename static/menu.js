@@ -50,11 +50,15 @@ scope.addEventListener("contextmenu", (event) => {
 
   contextMenu.style.top = `${normalizedY}px`;
   contextMenu.style.left = `${normalizedX}px`;
-
+  // hack to enable animation
   setTimeout(() => {
     contextMenu.classList.add("visible");
   });
 });
+
+function contextMenuClose(params) {
+    contextMenu.classList.remove("visible");
+}
 
 scope.addEventListener("click", (e) => {
   // ? close the menu if the user clicks outside of it
@@ -62,3 +66,17 @@ scope.addEventListener("click", (e) => {
     contextMenu.classList.remove("visible");
   }
 });
+
+/*
+   UL - Menu    https://www.w3schools.com/howto/howto_js_treeview.asp
+*/
+
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+} 

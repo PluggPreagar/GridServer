@@ -12,7 +12,12 @@
   }
 
 
-  function enableEditing(element) {
+  function enableEditing(e , element) {
+    if (!e.button === 1 /*left*/) {
+      console.debug("enableEditing surpressed");
+      return true;
+    }
+    console.debug("enableEditing");
     //Adds the content editable property to passed element
     element.setAttribute('contenteditable', true)
     //Focuses the element

@@ -110,7 +110,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 
 /*
 
-Menu from UL 
+Menu 
 
 */
 
@@ -118,7 +118,7 @@ Menu from UL
 #context-menu {
   position: fixed;
   z-index: 10000;
-  font-family: "Open Sans", sans-serif;
+/*  font-family: "Open Sans", sans-serif;*/
   padding: 0;
   margin: 0;
   width: 150px;
@@ -126,6 +126,11 @@ Menu from UL
   border-radius: 5px;
   transform: scale(0);
   transform-origin: top left;
+  /* adjust for UL */
+  background: rgba(255,255,255,0.8);
+  width: 300px;
+  padding: 10px;
+  border: 1px solid rgb(173, 216, 230);
 }
 
 #context-menu.visible {
@@ -145,3 +150,46 @@ Menu from UL
   background: #343434;
 }
 
+/*
+
+  Menu ul
+
+*/
+
+ul, #myUL {
+  list-style-type: none;
+}
+
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */'
+  transform: rotate(90deg);  
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}

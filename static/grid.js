@@ -29,10 +29,10 @@ class Grid {
           item.classList.add("grid-idx");
         } else {
           item.classList.add("grid-item");
-          item.onclick = function(e) { enableEditing(e.target) };
+          item.onclick = function(e) { enableEditing(e, e.target) };
           if (r % 2 == 1) item.classList.add("grid-odd"); // ignore head row ...
         }
-        item.setAttribute("contenteditable", "true");
+        //item.setAttribute("contenteditable", "true");
         item.innerHTML = this.items[r][c];
         eGrid.appendChild(item);
       } // c
@@ -59,10 +59,10 @@ class Grid {
           item.classList.add("grid-idx");
         } else {
           item.classList.add("grid-item");
-          item.onclick = function(e) { enableEditing(e.target) };
+          item.onclick = function(e) { enableEditing(e , e.target) };
           if (r % 2 == 0) item.classList.add("grid-odd");
         }
-        item.setAttribute("contenteditable", "true");
+        //item.setAttribute("contenteditable", "true");
         item.innerHTML = this.items[r][c];
         eGrid.appendChild(item);
       } // c
