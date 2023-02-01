@@ -141,6 +141,27 @@ public class main {
 
         );
 
+        On.get("/query").plain(
+                new ReqRespHandler() {
+                    @Override
+                    public Object execute(Req req,Resp resp) throws Exception {
+                        //return "helloWorld3";
+                        //Resp resp = new Resp;
+                        // https://github.com/rapidoid/rapidoid/issues/98
+                        resp.headers().put("Access-Control-Allow-Origin", "*");
+                        String data = getData(5, 5); // getData( req);
+                        // data may not contain line-breaks and "
+                        data = data.replace("\\","\\\\");
+                        data = data.replace( System.lineSeparator(),"\\n");
+                        data = data.replace( "\n","\\n");
+                        String json = "{  \"data\": \"" +  data + "\"}";
+                        return json;
+                    }
+                }
+
+        );
+
+
         On.get("/i").html(new ReqRespHandler() {
             @Override
             public Object execute(Req req, Resp resp) throws Exception {

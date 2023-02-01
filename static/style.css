@@ -15,7 +15,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   border-radius: 5px;
   padding: 2px;
   font-size: 16px;  
-  column-gap: 10px;
+  column-gap: 00px;
   row-gap: 10px;
 }
 
@@ -42,12 +42,6 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   text-align: right;
 }
 
-.grid-head {
-  padding: 2px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 5px;
-}
 
 -- fail
 -- .grid-container > *:nth-child(3n + 5), .grid-container > *:nth-child(3n + 6) {
@@ -55,9 +49,25 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 -- }
 
 
-.grid-odd{
+.grid-odd___{
   background-color: rgb(236, 249, 253, 0.8);
   border-radius: 5px;
+}
+
+.grid-3rd {
+  border-radius: 0px;
+  border-bottom: 1px dashed  lightblue;
+  /*position: absolute;*/
+  /*grid-column: 2 / -1; /*--- maybe used for grouping ....*/
+  /*z-index: -1;*/
+}
+
+.grid-head {
+  padding: 2px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 0px;
+  border-bottom: 1px solid lightblue;
 }
 
 
@@ -91,6 +101,38 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   border-radius: 5px;
 }
 
+.saved { 
+  background: lightgreen;
+  border: 1px solid rgba(0, 0, 255, 1) ;
+  border-radius: 5px;
+}
+
+.headlineIconSpace{
+  margin-left: 5px;  
+}
+
+.superscript{
+  position: relative;
+  font: normal normal 0.6em arial,serif;
+  margin-left: 2px;  
+  font-size: 0.6em;
+  bottom: 0.5em;  
+}
+
+.fa {
+   padding: 2px;
+   width: 10px;
+ } 
+
+.icon-inactiv , .fa-sort{
+  color: lightgray;
+  -webkit-text-stroke: 2px white; /* simulate light */
+}
+
+.icon-inactiv:hover , .fa-sort:hover{
+  color: gray;
+  -webkit-text-stroke: 0px white; /* simulate light */
+}
 
 
 #spacer{
@@ -182,7 +224,7 @@ ul, #myUL {
 
 .caret-down::before {
   -ms-transform: rotate(90deg); /* IE 9 */
-  -webkit-transform: rotate(90deg); /* Safari */'
+  -webkit-transform: rotate(90deg); /* Safari */
   transform: rotate(90deg);  
 }
 
@@ -192,4 +234,188 @@ ul, #myUL {
 
 .active {
   display: block;
+}
+
+
+/*
+
+  Circular menu 
+
+*/
+
+
+
+#context-menu-circular {
+  position: fixed;
+  z-index: 10000;
+/*  font-family: "Open Sans", sans-serif;*/
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  background: none;
+  border-radius: 5px;
+  transform: scale(0);
+  transform-origin: top left;
+  /* adjust for UL */
+  /*background: rgba(255,255,255,0.8);
+  width: 150px;
+  padding: 10px;
+  border: 1px solid rgb(173, 216, 230);
+  */
+}
+
+#context-menu-circular.visible {
+  transform: scale(1);
+  transition: transform 200ms ease-in-out;
+}
+
+.cmc-item {
+  position: fixed;
+  z-index: 10000;
+/*  font-family: "Open Sans", sans-serif;*/
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  /* adjust for UL */
+  background: rgba(255,255,255,0.8);
+  width: 150px;
+  height: 18px;
+  padding: 2px 5px 1px 5px ;
+  border: 1px solid rgb(173, 216, 230);
+  
+}
+
+.cmc-item-left {
+  text-align: right;
+}
+
+
+.cmc-item:hover {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgb(255, 128, 64);
+  
+}
+
+
+/*
+
+ log DIV
+
+*/
+
+
+.logDiv {
+  /* max-height: 100px;    problems on drag and drop */
+  height: 100px;
+  width: 90%;
+  margin: 20px;
+}
+
+.logDiv:hover {
+    overflow-y: auto;
+   /* max-height: 100px; */
+}
+
+
+/*
+
+  Scrollbar 
+
+*/
+
+body::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: orange;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid orange;  /* creates padding around scroll thumb */
+}
+
+body {
+  scrollbar-width: thin;          /* "auto" or "thin" */
+  scrollbar-color: blue orange;   /* scroll thumb and track */ 
+}
+
+.logDiv{
+  overflow-y: scroll;
+  scrollbar-color: white  white;
+  scrollbar-width: none;
+}
+
+.logDiv:hover:not(.resizable), .log:hover {
+  overflow-y: scroll;
+  scrollbar-color: rgb(173, 216, 230) lightgray;
+  scrollbar-width: thin;
+  border-right: 1px solid lightgray; /* sidebaar indicator*/
+  border-bottom: 1px solid lightgray; /* sidebaar indicator*/
+}
+
+
+/*
+
+  resizer
+
+*/
+
+.resizable {  
+  position: relative; 
+}
+
+.resizer {
+  width: 10px; 
+  height: 3px; 
+  position:absolute; 
+  right: 0; 
+  bottom: 0;
+  cursor: se-resize;
+  /*background: blue;*/ 
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  rotate: -45deg;
+  /*rotate: 135deg; some how this creates a strange scrollbar 
+  scrollbar-width: none !important; */ 
+  z-index: 10000;
+}
+
+.resizerHorizontal {
+  width: 10px; 
+  height: 3px; 
+  /*background: black; */
+  position:absolute; 
+  right: 50%; 
+  bottom: 0; 
+  cursor: ns-resize;
+  /* like to bars */ 
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+    z-index: 10000;
+
+  
+}
+
+
+/*
+
+  input mirror
+
+*/
+
+.CodeMirror {
+	clear: both;
+	width: 75%;
+  margin: auto; /* center */
+  height: auto; /* fit to text -- could be set fixed value to scroll */
+ 	border: white 1px solid; /* prevent wobbeling */
+  border-radius: 5px;
+  
+}
+
+.CodeMirror:hover {
+ 	border: lightgray 1px solid;
 }

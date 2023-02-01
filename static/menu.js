@@ -1,5 +1,5 @@
 const contextMenu = document.getElementById("context-menu");
-const scope = document.querySelector("body");
+const scope = document.querySelector("body__"); // to DISABLE set body___
 
 const normalizePozition = (mouseX, mouseY) => {
   // ? compute what is the mouse position relative to the container element (scope)
@@ -39,33 +39,40 @@ const normalizePozition = (mouseX, mouseY) => {
   return { normalizedX, normalizedY };
 };
 
-scope.addEventListener("contextmenu", (event) => {
-  event.preventDefault();
+if (scope){
 
-  const { clientX: mouseX, clientY: mouseY } = event;
-
-  const { normalizedX, normalizedY } = normalizePozition(mouseX, mouseY);
-
-  contextMenu.classList.remove("visible");
-
-  contextMenu.style.top = `${normalizedY}px`;
-  contextMenu.style.left = `${normalizedX}px`;
-  // hack to enable animation
-  setTimeout(() => {
-    contextMenu.classList.add("visible");
-  });
-});
+  
+    scope.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+    
+      const { clientX: mouseX, clientY: mouseY } = event;
+    
+      const { normalizedX, normalizedY } = normalizePozition(mouseX, mouseY);
+    
+      contextMenu.classList.remove("visible");
+    
+      contextMenu.style.top = `${normalizedY}px`;
+      contextMenu.style.left = `${normalizedX}px`;
+      // hack to enable animation
+      setTimeout(() => {
+        contextMenu.classList.add("visible");
+      });
+    });
+    
+  
+    scope.addEventListener("click", (e) => {
+      // ? close the menu if the user clicks outside of it
+      if (e.target.offsetParent != contextMenu) {
+        contextMenu.classList.remove("visible");
+      }
+    });
+    
+          
+}
 
 function contextMenuClose(params) {
     contextMenu.classList.remove("visible");
 }
-
-scope.addEventListener("click", (e) => {
-  // ? close the menu if the user clicks outside of it
-  if (e.target.offsetParent != contextMenu) {
-    contextMenu.classList.remove("visible");
-  }
-});
 
 /*
    UL - Menu    https://www.w3schools.com/howto/howto_js_treeview.asp

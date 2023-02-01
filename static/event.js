@@ -17,8 +17,14 @@ document.querySelector(".grid-container").addEventListener("input", function(e) 
     document.activeElement.blur(); // unset focus
     e.target.classList.add("modified");
     setTimeout(function() {
-      e.target.classList.remove("modified");
-    }, 3000);
+      grid.storeCell( e.target); // update data behind grid ...
+      e.target.classList.add("saved");
+      setTimeout(function() {
+        console.debug("simulated SAVE after CHANGE-VALUE");
+        e.target.classList.remove("modified");
+        e.target.classList.remove("saved");
+      }, 3000);
+    }, 2000);
     return false;
   } else {
     log("<input> " + e.target.id + ": " + e.target.innerHTML);
@@ -33,7 +39,7 @@ document.getElementById("grid_size").addEventListener("input", function(e) {
   console.debug(e);
   if (e.inputType == 'insertParagraph') {
     e.preventDefault();
-    e.target.innerHTML = items.length + " x " + (items.length < 1 ? 0 : items[0].length);
+    e.target.innerHTML = grid.items.length + " x " + (grid.items.length < 1 ? 0 : grid.items[0].length);
     e.target.removeAttribute('contenteditable');
     return false;
   } else {

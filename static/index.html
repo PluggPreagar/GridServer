@@ -5,11 +5,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- https://codemirror.net/5/doc/manual.html -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js"></script>
+
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
   <div class="container">
+
+
     <div class="grid-with-filter">
       <div class="grid-filter">
         <select name="cars" id="cars">
@@ -19,23 +28,19 @@
           <option value="audi">Audi</option>
         </select>
       </div>
+
+      <div id="inputMirror" style="clear: both;">
+
+      </div>
+
       <div id="grid-container" class="grid-container">
-        <div id="grid_0_1" class="grid-cross"></div>
-        <div id="grid_0_2" class="grid-head">2</div>
-        <div id="grid_0_3" class="grid-head">3</div>
-        <div id="grid_1_1" class="grid-idx">4</div>
-        <div id="grid_1_2" class="grid-item grid-odd" contentEditable="true">5</div>
-        <div id="grid_1_3" class="grid-item grid-odd" contentEditable="true">6</div>
-        <div id="grid_2_1" class="grid-idx">7</div>
-        <div id="grid_2_2" class="grid-item" contentEditable="true">8</div>
-        <div id="grid_2_3" class="grid-item" contentEditable="true">9</div>
       </div>
     </div>
   </div>
 
 
   <!-- https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724 -->
-  <div id="menu" style="display: none;"> 
+  <div id="menu" style="display: none;">
     <div id="context-menu0">
       <div class="item">Option 1</div>
       <div class="item" onclick="alert('asdad');">Option 2</div>
@@ -45,51 +50,70 @@
     </div>
   </div>
 
-    <div id="context-menu">
-        <ul id="myUL">
-          <li><span class="caret">Beverages</span>
+  <div id="context-menu">
+    <ul id="myUL">
+      <li><span class="caret">Beverages</span>
+        <ul class="nested">
+          <li>Water</li>
+          <li>Coffee</li>
+          <li><span class="caret">Tea</span>
             <ul class="nested">
-              <li>Water</li>
-              <li>Coffee</li>
-              <li><span class="caret">Tea</span>
+              <li onclick="alert('asdad');">White Tea click</li>
+              <li><span class="caret">Green Tea</span>
                 <ul class="nested">
-                  <li onclick="alert('asdad');">White Tea click</li>
-                  <li><span class="caret">Green Tea</span>
-                    <ul class="nested">
-                      <li>Sencha</li>
-                      <li onclick="contextMenuClose();grid.resize_items( 3, 3 ) ;grid.reset();grid.load();">reset</li>
-                      <li onclick="contextMenuClose();getDataFromUrlAsync(grid);">read</li>
-                      <li>Pi Lo Chun</li>
-                    </ul>
-                  <li>Black Tea</li>
-                  </li>
+                  <li>Sencha</li>
+                  <li onclick="contextMenuClose();grid.resize_items( 5, 5 ) ;grid.reset();grid.load();">reset</li>
+                  <li onclick="contextMenuClose();getDataFromUrlAsync(grid);">read</li>
+                  <li>Pi Lo Chun</li>
                 </ul>
-              </li>
-            </ul>
+              <li>Black Tea</li>
           </li>
-        </ul> 
-    </div>
-  
+        </ul>
+      </li>
+    </ul>
+    </li>
+    </ul>
+  </div>
+
+  <div id="context-menu-circular">
+  </div>
+
+
+  <div id="input-container">
+
+  </div>
+
 
   <div id="spacer">
 
   </div>
   <div id="log_div">
     <div class="index">
-      <div id="load" onclick="grid.resize_items( 3, 3 ) ;grid.reset();grid.load();"> reset </div>
+      <div id="load" onclick="grid.resize_items( 5, 5 ) ;grid.reset();grid.load();"> reset </div>
       <div id="load" onclick="getDataFromUrlAsync(grid);"> read ... </div>
-      <div id="grid_size" onclick="enableEditing(this);"> 3 x 3 </div>
+      <div id="load" onclick="getDataJsonFromUrlAsync(grid);"> readJson ... </div>
+      <div id="grid_size" onclick="enableEditing(event, this);"> 5 x 5 </div>
+      <a href="test.html">TEST</a>
+      <i class="fa-thin fa-house"></i>
+      <i class="fa sort"></i>
     </div>
-    <textarea id="log" rows="5" cols="40" readonly></textarea>
-    <textarea id="hint" rows="5" cols="80" readonly></textarea>
+    <textarea id="log" rows="5" cols="40" readonly style="display: none"></textarea>
+    <div id="logDiv" class="logDiv"></div>
+    <textarea id="hint" rows="5" cols="80" readonly style="display: none"></textarea>
+
   </div>
 
   <script src="util.js"></script>
   <script src="grid.js"></script>
+  <script src="controller.js"></script>
   <script src="menu.js"></script>
+  <script src="menuCircular.js"></script>
   <!--<script src="script.js"></script>-->
   <script src="connect.js"></script>
   <script src="event.js"></script>
+  <script src="dragdrop.js"></script>
+  <script src="resize.js"></script>
+  <script src="codemirror_wraper.js"></script>
   <script src="init.js"></script>
   <!--<script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer>-->
   </script>
