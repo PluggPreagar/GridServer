@@ -30,6 +30,7 @@ function addMenuItem() {
     , { descr: "read", icon: 'fa fa-file', action: "controller(grid,'READ:');" }
     , { descr: "update 2,2", icon: 'fa fa-file', action: "grid.updateData( 2,2, 'value from extern');return true;" }
     , { descr: "logFill", icon: 'fa fa-file', action: "log('a');log('ab');log('abc');log('abcd');log('a');log('ab');log('abc');log('abcd');" }
+    , { descr: "csv", icon: 'fa fa-file', action: "contextMenuCircularClose();getUrl2GridQry(grid,'data.csv');" }
     , "a", "b", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   var bounding = contextMenuCircular.getBoundingClientRect();

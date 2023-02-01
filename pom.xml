@@ -30,7 +30,12 @@
             <artifactId>rapidoid-quick</artifactId>
             <version>5.5.5</version>
         </dependency>
-
+        <!-- https://opencsv.sourceforge.net/#how_can_i_use_it_in_my_maven_projects -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.5</version>
+        </dependency>
     </dependencies>
 
     <build>

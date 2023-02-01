@@ -9,7 +9,10 @@ import org.rapidoid.http.impl.RespImpl;
 import org.rapidoid.setup.On;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static java.lang.Thread.sleep;
@@ -111,6 +114,23 @@ public class main {
         return data.toString();
     }
 
+
+
+    static String data2Result(String data){
+        // data may not contain line-breaks and "
+        String json = data;
+        json = json.replace("\\","\\\\");
+        json = json.replace( System.lineSeparator(),"\\n");
+        json = json.replace( "\n","\\n");
+        json = json.replace( "\"","\\\"");
+        json = "{  \"data\": \"" +  json + "\"}";
+        return json;
+    }
+
+
+
+
+
     public static void main(String[] arg) {
 
         // https://replit.com/@preisfrieden/jsGrdi1
@@ -127,6 +147,24 @@ public class main {
         //On.get("/size").json("helloWorld2");
         //On.get("/size").plain("helloWorld2");
         //On.get("").(
+
+
+        /*
+
+            ways ...
+
+            -   {... -> json, data in data-Attribute
+            -   "... -> csv mit ";" delimiter
+            -   sonst -> csv mit ";" delimiter
+
+
+
+
+         */
+
+
+
+
         On.get("/size").plain(
                 new ReqRespHandler() {
                     @Override
@@ -149,13 +187,63 @@ public class main {
                         //Resp resp = new Resp;
                         // https://github.com/rapidoid/rapidoid/issues/98
                         resp.headers().put("Access-Control-Allow-Origin", "*");
-                        String data = getData(5, 5); // getData( req);
-                        // data may not contain line-breaks and "
-                        data = data.replace("\\","\\\\");
-                        data = data.replace( System.lineSeparator(),"\\n");
-                        data = data.replace( "\n","\\n");
-                        String json = "{  \"data\": \"" +  data + "\"}";
-                        return json;
+                        String data = "";
+                        Map<String, String> params = req.params();
+                        if (params.containsKey("qry2")) {
+
+                        } else if (params.containsKey("qry")) {
+
+                            String qry = req.param("qry");
+                            data = new DataConnector().load(qry);
+
+                            String id = params.get("id");
+                            if (null != id && id.matches("[0-9]+,[0-9]+") && params.containsKey("val")) {
+                                String[] i = id.split(",");
+                                new DataConnector().updateCSV( qry, params.get("val"), Integer.valueOf(i[0]), Integer.valueOf(i[1]));
+                            }
+
+                        } else {
+                            data = getData(5, 5); // getData( req);
+
+                        }
+
+                        return data2Result( data );
+                    }
+                }
+
+        );
+
+
+        On.get("/csv").plain(
+                new ReqRespHandler() {
+                    @Override
+                    public Object execute(Req req,Resp resp) throws Exception {
+                        //return "helloWorld3";
+                        //Resp resp = new Resp;
+                        // https://github.com/rapidoid/rapidoid/issues/98
+                        resp.headers().put("Access-Control-Allow-Origin", "*");
+                        DataConnector connector = new DataConnector();
+                        //connector.save( req.body() );
+                        //return getData(req);
+                        //return connector.load();
+                        return data2Result(connector.load("data"));
+                    }
+                }
+
+        );
+
+        On.get("/info").plain(
+                new ReqRespHandler() {
+                    @Override
+                    public Object execute(Req req,Resp resp) throws Exception {
+                        //return "helloWorld3";
+                        //Resp resp = new Resp;
+                        // https://github.com/rapidoid/rapidoid/issues/98
+                        resp.headers().put("Access-Control-Allow-Origin", "*");
+                        //connector.save( req.body() );
+                        //return getData(req);
+                        //return connector.load();
+                        return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(LocalDateTime.now());
                     }
                 }
 
@@ -170,6 +258,9 @@ public class main {
             }
         });
 
+        DataConnector connector = new DataConnector();
+        //connector.save();
+        connector.load("data");
         //System.out.println("..DONE !!");
     }
 }

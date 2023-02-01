@@ -12,7 +12,7 @@ function getDataFromUrl(grid) {
 grid.load();
 getDataFromUrl(grid);
 
-
+msg_init();
 
 
 document.getElementById("logDiv").addEventListener('click', function init() {

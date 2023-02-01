@@ -11,7 +11,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 
 .grid-container {
   display: grid;
-  grid-template-columns: 20px auto auto;
+  grid-template-columns: auto auto auto;
   border-radius: 5px;
   padding: 2px;
   font-size: 16px;  
@@ -30,7 +30,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   border-radius: 5px;
   /* border: none; */
   padding: 2px;
-  text-align: center;
+  text-align: right;
 }
 
 
@@ -65,7 +65,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 .grid-head {
   padding: 2px;
   font-weight: bold;
-  text-align: center;
+  text-align: right;
   border-radius: 0px;
   border-bottom: 1px solid lightblue;
 }
@@ -418,4 +418,13 @@ body {
 
 .CodeMirror:hover {
  	border: lightgray 1px solid;
+}
+
+
+/*
+   msg
+*/
+
+.newMsg {
+    color: green;
 }

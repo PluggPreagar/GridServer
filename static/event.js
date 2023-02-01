@@ -3,7 +3,10 @@
 
 //document.getElementById("grid-container").addEventListener("input", function() {
 // should work...
-//document.querySelectorAll('.some-class').forEach(item => { 
+//document.querySelectorAll('.some-class').forEach(item => {
+
+
+
 document.querySelector(".grid-container").addEventListener("input", function(e) {
   console.debug(e);
   //document.getElementById("log").value += e.data;  // just the current char
@@ -16,6 +19,20 @@ document.querySelector(".grid-container").addEventListener("input", function(e) 
     e.target.innerHTML = value_current;
     document.activeElement.blur(); // unset focus
     e.target.classList.add("modified");
+
+    updateGridValue( grid, myCodeMirror.getValue(), value_current, grid.getIdxOf(e.target)
+            ,function() {
+              grid.storeCell( e.target); // update data behind grid ...
+              e.target.classList.add("saved");
+              setTimeout(function() {
+                console.debug("simulated SAVE after CHANGE-VALUE");
+                e.target.classList.remove("modified");
+                e.target.classList.remove("saved");
+              }, 3000);
+            }
+        );
+
+    /*
     setTimeout(function() {
       grid.storeCell( e.target); // update data behind grid ...
       e.target.classList.add("saved");
@@ -25,6 +42,8 @@ document.querySelector(".grid-container").addEventListener("input", function(e) 
         e.target.classList.remove("saved");
       }, 3000);
     }, 2000);
+    */
+
     return false;
   } else {
     log("<input> " + e.target.id + ": " + e.target.innerHTML);
@@ -55,3 +74,26 @@ document.getElementById("grid_size").addEventListener("input", function(e) {
     }
   }
 }, false);
+
+function msg_set( msg ) {
+    e = document.getElementById("msg");
+    e.innerHTML = msg;
+    e.classList.add("newMsg");
+    setTimeout(function() {
+      e.classList.add("saved_");
+      setTimeout(function() {
+        e.classList.remove("newMsg");
+        e.classList.remove("saved");
+      }, 500);
+    }, 500);
+}
+
+function msg_init() {
+    setTimeout(function() {
+        console.debug("msg_init");
+        msgConnection( msg_set );
+        msg_init(); // re-init
+    }, 3000);
+}
+
+

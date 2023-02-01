@@ -11,9 +11,10 @@ var myCodeMirror = CodeMirror(divCodeMirror, {
     },
     "Ctrl-Enter": function(cm){
       log("capture Ctrl-Enter");
-      getUrl2Grid( cm.cm_grid, cm);
-      cm.getDoc().setValue('var msg = "Hi";');
-      // return CodeMirror.Pass; // continue next handler 
+      //getUrl2Grid( cm.cm_grid, cm);
+      getUrl2GridQry(cm.cm_grid, myCodeMirror.getValue());
+      //cm.getDoc().setValue('var msg = "Hi";');
+      // return CodeMirror.Pass; // continue next handler
     }
   }
 });

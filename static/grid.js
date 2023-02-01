@@ -3,6 +3,7 @@ class Grid {
 
   constructor() {
     this.items = [["", 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]];
+    this.lenMax = [];
     this.sortModeIcons = ["fa-sort", "fa-chevron-down", "fa-chevron-up"];
     this.sortModeAvail = ["", "asc", "desc", "num-asc", "num-desc"];
     this.sortMode = null;
@@ -49,7 +50,7 @@ class Grid {
     let eGrid = document.getElementById("grid-container");
     if (0 == updateDataOnly) {
       eGrid.innerHTML = "";
-      eGrid.style.gridTemplateColumns = "20px" + " auto".repeat(this.items.length < 1 ? 1 : this.items[0].length - 1);
+      eGrid.style.gridTemplateColumns = ( this.lenMax[0] ?  (this.lenMax[0]+2)+"ch" : "auto") + " auto".repeat(this.items.length < 1 ? 1 : this.items[0].length - 1);
     }
 
     // if (this.sortIdx) { console.debug("use sortIdx " + this.sortIdx[ 1 ][ 1 ] + " "+ this.sortIdx[ 2 ][ 1 ] + " "+ this.sortIdx[ 3 ][ 1 ] + " ");}
@@ -215,15 +216,39 @@ class Grid {
     //console.debug(r);
     let d1 = r.split("\n");
     //if (d1[d1.length-1].length < 1 ) {
-    if ("" == d1[d1.length - 1]) {
+    if (d1.length > 0 && "" == d1[d1.length - 1]) {
       d1.pop(); // closing \n  optional
     }
     //}
-    this.resize_items(d1.length, d1[0].split(";").length);
-    //for (let i = 0; i < 5; i++) {
-    for (let i = 0; i < d1.length; i++) {
-      let d2 = d1[i].split(";");
-      this.items[i] = d2;
+    if (d1.length > 0) {
+        let delim = ";";
+        let char0 = d1[0].charAt(0);
+        if ( '"' == char0 || "'" == char0 ) {
+            delim = new RegExp( char0 + "[;,]" + char0);  // separator ...
+        } else {
+            char0 = "";
+        }
+        this.resize_items(d1.length, d1[0].split( delim ).length);
+        //for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < d1.length; i++) {
+            let d2 = d1[i];
+            if (char0 != "") {
+                d2 = d2.substring( 1, d2.length - 1  );
+            }
+            let d3 = d2.split( delim );
+            this.items[i] = d3;
+
+            // determine max len per col
+            for (let ii = 0; ii < d3.length; ii++) {
+                let len = d3[ii].length;
+                if (this.lenMax.length < ii || !this.lenMax[ii] || this.lenMax[ii] < len){
+                    this.lenMax[ii] = len;
+                }
+            }
+
+        }
+    } else {
+        this.resize_items(0, 0);
     }
     console.table(this.items);
   }
