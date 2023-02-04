@@ -18,7 +18,7 @@ async function updateGridValue(grid, qry, val, id, callback) {
    log('!!! Connection fail !!' + url);
    console.error(e);
   }
-  if (text && callback){
+  if (callback){
     callback( text );
   }
 }
@@ -36,7 +36,7 @@ async function msgConnection( callback) {
    log('!!! Connection fail !!' + url);
    console.error(e);
   }
-  if (text && callback){
+  if (callback){
     callback( text );
   }
 }
@@ -59,7 +59,7 @@ async function getUrl2GridQry(grid, qry) {
   if (text){
     grid.setDataJson(text);
     grid.load(10);
-    grid.codeMirror.setValue(qry);
+    grid.codeMirror.setValue(qry ?? "");
   }
   
 }

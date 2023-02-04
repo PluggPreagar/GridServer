@@ -3,8 +3,8 @@ const contextMenuCircular = document.getElementById(contextMenuCircularId);
 const contextMenuCircularScope = document.querySelector("body"); // to DISABLE set body___
 
 
-contextMenuCircular.style.top = "150px";
-contextMenuCircular.style.left = "400px";
+//contextMenuCircular.style.top = "150px";
+//contextMenuCircular.style.left = "400px";
 contextMenuCircular.style.heigth = "200px";
 /*
 contextMenuCircular.classList.add("visible");
@@ -26,11 +26,13 @@ function addMenuItem() {
   //             <-  x  ->                    2  |  1       3 | 2
   //
   items = ["read", "reset", "a", "b", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-  items = [{ descr: "reset", icon: '<i class="fa fa-bars" style="color:red;"></i>', action: "controller(grid,'RESET:');" }
-    , { descr: "read", icon: 'fa fa-file', action: "controller(grid,'READ:');" }
-    , { descr: "update 2,2", icon: 'fa fa-file', action: "grid.updateData( 2,2, 'value from extern');return true;" }
+  items = [{ descr: "reset", icon: '<i class="fa fa-bars" style="color:red;"></i>', action: "controller(contextMenuCircular.event_grid,'RESET:');" }
+    , { descr: "read", icon: 'fa fa-file', action: "controller(contextMenuCircular.event_grid,'READ:');" }
+    , { descr: "update 2,2", icon: 'fa fa-file', action: "contextMenuCircular.event_grid.updateData( 2,2, 'value from extern');return true;" }
     , { descr: "logFill", icon: 'fa fa-file', action: "log('a');log('ab');log('abc');log('abcd');log('a');log('ab');log('abc');log('abcd');" }
-    , { descr: "csv", icon: 'fa fa-file', action: "contextMenuCircularClose();getUrl2GridQry(grid,'data.csv');" }
+    , { descr: "csv", icon: 'fa fa-file', action: "contextMenuCircularClose();getUrl2GridQry(contextMenuCircular.event_grid,'data.csv');" }
+    , { descr: "grid", icon: 'fa fa-file', action: "contextMenuCircularClose();createGridContainer();" }
+    , { descr: "grid del", icon: 'fa fa-file', action: "contextMenuCircularClose();contextMenuCircular.event_gridElem.remove();" }
     , "a", "b", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   var bounding = contextMenuCircular.getBoundingClientRect();
@@ -106,6 +108,22 @@ contextMenuCircularScope.addEventListener("contextmenu", (event) => {
 
   const { clientX: mouseX, clientY: mouseY } = event;
   const { normalizedX, normalizedY } = normalizePozitionCircular(mouseX, mouseY);
+
+  // prepare grid to apply action to grid
+  contextMenuCircular.event = event;
+  let gridElem = event.target;
+  while(gridElem && (!gridElem.classList || !gridElem.classList.contains("grid-with-filter")) ) {
+    gridElem = gridElem.parentNode;
+  }
+  if (gridElem && gridElem.classList.contains("grid-with-filter")) {
+      console.debug("ContextMenu for " + gridElem.id);
+      contextMenuCircular.event_gridElem = gridElem;
+      contextMenuCircular.event_grid = gridElem.grid;
+  } else {
+      console.debug("ContextMenu without grid ");
+      contextMenuCircular.event_gridElem = null;
+      contextMenuCircular.event_grid = null;
+  }
 
   contextMenuCircular.classList.remove("visible");
   contextMenuCircular.style.top = `${normalizedY}px`;

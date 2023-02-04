@@ -9,6 +9,7 @@ import org.rapidoid.http.impl.RespImpl;
 import org.rapidoid.setup.On;
 
 import java.math.BigInteger;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -78,6 +79,42 @@ public class main {
 
      */
 
+
+    public static void createNewDatabase(String fileName) {
+
+        String url = "jdbc:sqlite:./data/" + fileName;
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The driver name is " + meta.getDriverName());
+                System.out.println("A new database has been created.");
+
+                Statement stmt;
+                String sql;
+/*
+                Statement stmt = conn.createStatement();
+                String sql = "create table t1( id int primary key AUTOINCREMENT, name text, age int, address text); ";
+                stmt.executeUpdate(sql);
+                stmt.close();
+*/
+                stmt = conn.createStatement();
+                sql = "INSERT INTO t1 (ID,NAME,AGE,ADDRESS) VALUES (1, 'Paul', 32, 'California');";
+                stmt.executeUpdate(sql);
+
+                conn.close();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     public static String getData(Req req){
         int size1 = 10;
         int size2 = 50;
@@ -141,13 +178,13 @@ public class main {
         // http://localhost:8080/size
 
         System.out.println("start with http://localhost:8080/index.html");
-        System.out.println("start with http://localhost:8080/index.html");
         System.out.println("-------------------------------------------");
         //On.get("/size").json("helloWorld"); // .json((String msg) -> msg.length());
         //On.get("/size").json("helloWorld2");
         //On.get("/size").plain("helloWorld2");
         //On.get("").(
 
+        createNewDatabase("test.db");
 
         /*
 
@@ -191,13 +228,14 @@ public class main {
                         Map<String, String> params = req.params();
                         if (params.containsKey("qry2")) {
 
-                        } else if (params.containsKey("qry")) {
+                        } else if (params.containsKey("qry") && req.param("qry").contains(".csv") ) {
 
                             String qry = req.param("qry");
                             data = new DataConnector().load(qry);
 
                             String id = params.get("id");
                             if (null != id && id.matches("[0-9]+,[0-9]+") && params.containsKey("val")) {
+                                // UPDATE
                                 String[] i = id.split(",");
                                 new DataConnector().updateCSV( qry, params.get("val"), Integer.valueOf(i[0]), Integer.valueOf(i[1]));
                             }

@@ -5,50 +5,53 @@
 // should work...
 //document.querySelectorAll('.some-class').forEach(item => {
 
+function initGridInputListener(gridElem) {
+    gridElem.querySelector(".grid-container").addEventListener("input", function(e) {
+      console.debug(e);
+      //document.getElementById("log").value += e.data;  // just the current char
+      // log( "<input> " + e.target.id + ": "+ e.target.innerHTML );
+      //if (e.key === 'Enter' || )
+      if (e.inputType == 'insertParagraph') {
+        e.preventDefault();
+        let grid = gridElem.grid;
+        grid.input_end(e, value_current);
+        e.target.removeAttribute('contenteditable');
+        e.target.innerHTML = value_current;
+        document.activeElement.blur(); // unset focus
+        e.target.classList.add("modified");
 
-document.querySelector(".grid-container").addEventListener("input", function(e) {
-  console.debug(e);
-  //document.getElementById("log").value += e.data;  // just the current char
-  // log( "<input> " + e.target.id + ": "+ e.target.innerHTML );  
-  //if (e.key === 'Enter' || )
-  if (e.inputType == 'insertParagraph') {
-    e.preventDefault();
-    grid.input_end(e, value_current);
-    e.target.removeAttribute('contenteditable');
-    e.target.innerHTML = value_current;
-    document.activeElement.blur(); // unset focus
-    e.target.classList.add("modified");
+        updateGridValue( grid, grid.codeMirror.getValue(), value_current, grid.getIdxOf(e.target)
+                ,function() {
+                  grid.storeCell( e.target); // update data behind grid ...
+                  e.target.classList.add("saved");
+                  setTimeout(function() {
+                    console.debug("simulated SAVE after CHANGE-VALUE");
+                    e.target.classList.remove("modified");
+                    e.target.classList.remove("saved");
+                  }, 3000);
+                }
+            );
 
-    updateGridValue( grid, grid.codeMirror.getValue(), value_current, grid.getIdxOf(e.target)
-            ,function() {
-              grid.storeCell( e.target); // update data behind grid ...
-              e.target.classList.add("saved");
-              setTimeout(function() {
-                console.debug("simulated SAVE after CHANGE-VALUE");
-                e.target.classList.remove("modified");
-                e.target.classList.remove("saved");
-              }, 3000);
-            }
-        );
+        /*
+        setTimeout(function() {
+          grid.storeCell( e.target); // update data behind grid ...
+          e.target.classList.add("saved");
+          setTimeout(function() {
+            console.debug("simulated SAVE after CHANGE-VALUE");
+            e.target.classList.remove("modified");
+            e.target.classList.remove("saved");
+          }, 3000);
+        }, 2000);
+        */
 
-    /*
-    setTimeout(function() {
-      grid.storeCell( e.target); // update data behind grid ...
-      e.target.classList.add("saved");
-      setTimeout(function() {
-        console.debug("simulated SAVE after CHANGE-VALUE");
-        e.target.classList.remove("modified");
-        e.target.classList.remove("saved");
-      }, 3000);
-    }, 2000);
-    */
+        return false;
+      } else {
+        log("<input> " + e.target.id + ": " + e.target.innerHTML);
+      }
+      value_current = e.target.innerHTML; // as ENTER already create sub-divs...
+    }, false);
+}
 
-    return false;
-  } else {
-    log("<input> " + e.target.id + ": " + e.target.innerHTML);
-  }
-  value_current = e.target.innerHTML; // as ENTER already create sub-divs...
-}, false);
 
 document.querySelector(".grid-container").addEventListener("input", function(e) {
 }, false);
