@@ -6,7 +6,6 @@
 //document.querySelectorAll('.some-class').forEach(item => {
 
 
-
 document.querySelector(".grid-container").addEventListener("input", function(e) {
   console.debug(e);
   //document.getElementById("log").value += e.data;  // just the current char
@@ -20,7 +19,7 @@ document.querySelector(".grid-container").addEventListener("input", function(e) 
     document.activeElement.blur(); // unset focus
     e.target.classList.add("modified");
 
-    updateGridValue( grid, myCodeMirror.getValue(), value_current, grid.getIdxOf(e.target)
+    updateGridValue( grid, grid.codeMirror.getValue(), value_current, grid.getIdxOf(e.target)
             ,function() {
               grid.storeCell( e.target); // update data behind grid ...
               e.target.classList.add("saved");
@@ -75,24 +74,32 @@ document.getElementById("grid_size").addEventListener("input", function(e) {
   }
 }, false);
 
+let msg_outdated ;
 function msg_set( msg ) {
     e = document.getElementById("msg");
     e.innerHTML = msg;
-    e.classList.add("newMsg");
+    e.classList.remove("msgOutdated");
+    e.classList.add("msgNew");
     setTimeout(function() {
       e.classList.add("saved_");
       setTimeout(function() {
-        e.classList.remove("newMsg");
+        e.classList.remove("msgNew");
         e.classList.remove("saved");
       }, 500);
     }, 500);
+    //
+    if (msg_outdated) clearTimeout(msg_outdated);
+    msg_outdated = setTimeout(function() {
+                e.classList.add("msgOutdated");
+              }, 5000);
+    msg_init(); // re-init
+
 }
 
 function msg_init() {
     setTimeout(function() {
         console.debug("msg_init");
         msgConnection( msg_set );
-        msg_init(); // re-init
     }, 3000);
 }
 

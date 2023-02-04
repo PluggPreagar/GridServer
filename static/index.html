@@ -16,10 +16,21 @@
 </head>
 
 <body>
-  <div class="container">
+  <div id="grid_container" class="container">
+
+    <div id="grid_tmpl" class="grid-with-filter draggable resizable" style="display: none; top: 50px;">
+      <div class="dragHandle" >
+      </div>
+      <div  class="codeMirrorAnker"  style="clear: both;">
+      </div>
+      <div  class="grid-container">
+      </div>
+    </div>
 
 
-    <div class="grid-with-filter">
+    <div id="grid" class="grid-with-filter draggable resizable" style="top: 50px;">
+      <div class="dragHandle" >
+      </div>
       <div class="grid-filter">
         <select name="cars" id="cars">
           <option value="volvo">Volvo</option>
@@ -28,16 +39,13 @@
           <option value="audi">Audi</option>
         </select>
       </div>
-
-      <div id="inputMirror" style="clear: both;">
-
+      <div  class="codeMirrorAnker"  style="clear: both;">
       </div>
-
-      <div id="grid-container" class="grid-container">
+      <div  class="grid-container">
       </div>
     </div>
-  </div>
 
+  </div>
 
   <!-- https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724 -->
   <div id="menu" style="display: none;">
@@ -80,13 +88,12 @@
 
 
   <div id="input-container">
-
   </div>
 
 
   <div id="spacer">
-
   </div>
+
   <div id="log_div">
     <div class="index">
       <div id="load" onclick="grid.resize_items( 5, 5 ) ;grid.reset();grid.load();"> reset </div>

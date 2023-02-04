@@ -1,7 +1,14 @@
+let gridNoCounter = 0;
+function nextGridNo(){
+    gridNoCounter = gridNoCounter + 1;
+    return gridNoCounter;
+}
+
 class Grid {
 
-
-  constructor() {
+  constructor( elem ) {
+    this.eGrid = elem; // document.getElementById( id ); // "grid-container"
+    this.gridNo = nextGridNo();
     this.items = [["", 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]];
     this.lenMax = [];
     this.sortModeIcons = ["fa-sort", "fa-chevron-down", "fa-chevron-up"];
@@ -47,10 +54,9 @@ class Grid {
     if (0 == rowLimit || this.items.length < rowLimit) {
       rowLimit = this.items.length;
     }
-    let eGrid = document.getElementById("grid-container");
     if (0 == updateDataOnly) {
-      eGrid.innerHTML = "";
-      eGrid.style.gridTemplateColumns = ( this.lenMax[0] ?  (this.lenMax[0]+2)+"ch" : "auto") + " auto".repeat(this.items.length < 1 ? 1 : this.items[0].length - 1);
+      this.eGrid.innerHTML = "";
+      this.eGrid.style.gridTemplateColumns = ( this.lenMax[0] ?  (this.lenMax[0]+2)+"ch" : "auto") + " auto".repeat(this.items.length < 1 ? 1 : this.items[0].length - 1);
     }
 
     // if (this.sortIdx) { console.debug("use sortIdx " + this.sortIdx[ 1 ][ 1 ] + " "+ this.sortIdx[ 2 ][ 1 ] + " "+ this.sortIdx[ 3 ][ 1 ] + " ");}
@@ -90,7 +96,7 @@ class Grid {
         // back-refer
         item.setAttribute('srcD', r + "," + c); // here use r/c of item - no matter of sort and filter
         if (0 == updateDataOnly) {
-          eGrid.appendChild(item);
+          this.eGrid.appendChild(item);
         } else {
           let e = document.getElementById(item.id);
           if (!e) {

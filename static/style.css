@@ -77,17 +77,25 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 }
 
 .grid-filter{
-  padding: 10px 20px 10px 20px;  
+  padding: 10px 20px 10px 20px;
 }
 
 .grid-with-filter{
   float: right;
   width: 95%;
-  padding: 10px 20px 10px 20px;
+  /* padding: 10px 20px 10px 20px;    gain space for move handle */
+  padding: 0px 20px 10px 20px;
   border: 1px solid lightblue;
   border-radius: 5px;
   margin: 10px;
-  
+  overflow: auto;
+  background: rgba(255,255,255,0.90);
+}
+
+.grid-with-filter:hover {
+  /* resizable with handle */
+  resize: both;
+  overflow: auto;
 }
 
 
@@ -137,7 +145,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 
 #spacer{
   clear: both;
-  height: 100px;
+  height: 800px;
 }
 
 #log_div{
@@ -323,24 +331,84 @@ ul, #myUL {
 
 */
 
-body::-webkit-scrollbar {
-  width: 12px;               /* width of the entire scrollbar */
+/*
+html::-webkit-scrollbar {
+    width: 10px;
+  }
+
+html::-webkit-scrollbar-track {
+    background: rgb(179, 177, 177);
+    border-radius: 10px;
 }
 
-body::-webkit-scrollbar-track {
-  background: orange;        /* color of the tracking area */
+html::-webkit-scrollbar-thumb {
+    background: rgb(136, 136, 136);
+    border-radius: 10px;
+  }
+
+html::-webkit-scrollbar-thumb:hover {
+    background: rgb(100, 100, 100);
+    border-radius: 10px;
+  }
+
+html::-webkit-scrollbar-thumb:active {
+    background: rgb(68, 68, 68);
+    border-radius: 10px;
+  }
+*/
+
+/* firefox     https://codepen.io/reacraf/pen/ExaBZzZ    */
+
+
+
+
+
+
+.resizable {
+  scrollbar-width: thin;
+  scrollbar-color: #e3e3e3 transparent;
 }
 
-body::-webkit-scrollbar-thumb {
-  background-color: blue;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
-  border: 3px solid orange;  /* creates padding around scroll thumb */
+/* firefox     https://codepen.io/reacraf/pen/ExaBZzZ    */
+//firefox
+
+.resizable {
+  scrollbar-width: thin;
+  scrollbar-color: $gray--lighter transparent;
+}
+.resizable:-webkit-scrollbar {
+  width: 11px;
+}
+.resizable:-webkit-scrollbar-track {
+  background: transparent;
+}
+.resizable:-webkit-scrollbar-thumb {
+  background-color: $gray--lighter;
+  border-radius: 6px;
+  border: 3px solid transparent;
 }
 
-body {
-  scrollbar-width: thin;          /* "auto" or "thin" */
-  scrollbar-color: blue orange;   /* scroll thumb and track */ 
+/* webkit browsers */
+.resizable::-webkit-scrollbar,
+.resizable::-webkit-scrollbar-thumb {
+  height: 26px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 10px solid transparent;
 }
+
+.resizable::-webkit-scrollbar-thumb {        
+  box-shadow: inset 0 0 0 10px;
+}
+
+
+
+
+
+
+
+
+
 
 .logDiv{
   overflow-y: scroll;
@@ -425,6 +493,40 @@ body {
    msg
 */
 
-.newMsg {
+.msgNew {
     color: green;
+}
+
+.msgOutdated{
+    color: red;
+}
+
+
+/*
+
+  Drag
+
+*/
+
+.draggable {
+  position: absolute;
+  z-index: 9;
+  /*
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+  */
+}
+
+.dragHandle {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  /* background-color: rgb(173, 216, 230); */
+  background-color: #fffff;
+  color: #fff;
+}
+
+.dragHandle:hover {
+  background-color: #2196F3;
 }

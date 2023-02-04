@@ -59,14 +59,14 @@ async function getUrl2GridQry(grid, qry) {
   if (text){
     grid.setDataJson(text);
     grid.load(10);
-    myCodeMirror.setValue(qry);
+    grid.codeMirror.setValue(qry);
   }
   
 }
 
 
 function getUrl2Grid(grid) {
-  getUrl2GridQry( grid, myCodeMirror.getValue());
+  getUrl2GridQry( grid, grid.codeMirror.getValue());
 }
 
 
