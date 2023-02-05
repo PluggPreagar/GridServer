@@ -12,7 +12,9 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -170,6 +172,10 @@ public class main {
 
     public static void main(String[] arg) {
 
+        List<DataConnector> dataConnectorList = new ArrayList<>();
+        dataConnectorList.add( new DataConCSV());
+        dataConnectorList.add( new DataConSqlite());
+
         // https://replit.com/@preisfrieden/jsGrdi1
 
         // files from  static/ is loadadble by default ..!
@@ -224,25 +230,20 @@ public class main {
                         //Resp resp = new Resp;
                         // https://github.com/rapidoid/rapidoid/issues/98
                         resp.headers().put("Access-Control-Allow-Origin", "*");
-                        String data = "";
+                        String data = null;
                         Map<String, String> params = req.params();
-                        if (params.containsKey("qry2")) {
-
-                        } else if (params.containsKey("qry") && req.param("qry").contains(".csv") ) {
-
-                            String qry = req.param("qry");
-                            data = new DataConnector().load(qry);
-
-                            String id = params.get("id");
-                            if (null != id && id.matches("[0-9]+,[0-9]+") && params.containsKey("val")) {
-                                // UPDATE
-                                String[] i = id.split(",");
-                                new DataConnector().updateCSV( qry, params.get("val"), Integer.valueOf(i[0]), Integer.valueOf(i[1]));
+                        String query = req.param("qry");
+                        for (DataConnector con : dataConnectorList){
+                            if (con.matches(query,params)) {
+                                data = con.run(query,params);
+                                if (null != data) {
+                                    break;
+                                }
                             }
+                        }
 
-                        } else {
+                        if (null == data) {
                             data = getData(5, 5); // getData( req);
-
                         }
 
                         return data2Result( data );
@@ -252,23 +253,6 @@ public class main {
         );
 
 
-        On.get("/csv").plain(
-                new ReqRespHandler() {
-                    @Override
-                    public Object execute(Req req,Resp resp) throws Exception {
-                        //return "helloWorld3";
-                        //Resp resp = new Resp;
-                        // https://github.com/rapidoid/rapidoid/issues/98
-                        resp.headers().put("Access-Control-Allow-Origin", "*");
-                        DataConnector connector = new DataConnector();
-                        //connector.save( req.body() );
-                        //return getData(req);
-                        //return connector.load();
-                        return data2Result(connector.load("data"));
-                    }
-                }
-
-        );
 
         On.get("/info").plain(
                 new ReqRespHandler() {
@@ -296,9 +280,5 @@ public class main {
             }
         });
 
-        DataConnector connector = new DataConnector();
-        //connector.save();
-        connector.load("data");
-        //System.out.println("..DONE !!");
     }
 }

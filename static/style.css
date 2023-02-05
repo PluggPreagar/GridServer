@@ -85,7 +85,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   width: 95%;
   /* padding: 10px 20px 10px 20px;    gain space for move handle */
   padding: 0px 20px 10px 20px;
-  border: 1px solid lightblue;
+  border: 1px dashed white;
   border-radius: 5px;
   margin: 10px;
   overflow: auto;
@@ -94,6 +94,7 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
 
 .grid-with-filter:hover {
   /* resizable with handle */
+  border: 1px solid lightblue;
   resize: both;
   overflow: auto;
 }
