@@ -90,6 +90,8 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   margin: 10px;
   overflow: auto;
   background: rgba(255,255,255,0.90);
+  __box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  transition: all 200ms ease-out;
 }
 
 .grid-with-filter:hover {
@@ -97,6 +99,8 @@ https://www.w3schools.com/cssref/playdemo.php?filename=playcss_justify-self
   border: 1px solid lightblue;
   resize: both;
   overflow: auto;
+  __box-shadow: 10px 10px 5px lightblue;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 
