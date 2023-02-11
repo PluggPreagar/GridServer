@@ -11,6 +11,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,13 @@ public class DataConCSV implements DataConnector{
     public String run(String qry, Map<String, String> params) {
         String fileName = qry;
         String id = params.get("id");
-        if (null != id && id.matches("[0-9]+,[0-9]+") && params.containsKey("val")) {
+        if (null != id && id.matches("[0-9]+,[0-9]+") && null != params.get("val")) {
             // UPDATE
             String[] i = id.split(",");
             updateCSV( fileName, params.get("val"), Integer.valueOf(i[0]), Integer.valueOf(i[1]));
 
+        } else if (null != id && id.matches("[0-9]+") && (null == params.get("val") || params.get("val").isEmpty() )) {
+            insertRowCSV(fileName, Integer.valueOf(id));
         }
         String data = load(fileName);
         return data;
@@ -94,4 +97,39 @@ public class DataConCSV implements DataConnector{
             }
         }
     }
+
+    public static void insertRowCSV(String fileName, int row )  {
+
+        if (fileName.matches("[a-zA-Z0-9_.-]+")) {
+            fileName = "data/" + fileName + (fileName.contains(".") ? "" : ".csv");
+
+            // Read existing file
+            CSVReader reader = null;
+            try {
+                reader = new CSVReaderBuilder(new FileReader(fileName)).build();
+                List<String[]> csvBody = reader.readAll();
+                // get CSV row column  and replace with by using row and column
+                reader.close();
+
+                String[] cells = new String[csvBody.get(0).length];
+                Arrays.fill(cells, "");
+                csvBody.add(row,cells);
+
+                // Write to CSV file which is open
+                ICSVWriter writer = new CSVWriterBuilder(new FileWriter(fileName)).build();
+                writer.writeAll(csvBody);
+                writer.flush();
+                writer.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (CsvException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
 }

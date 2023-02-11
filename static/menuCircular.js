@@ -12,7 +12,24 @@ contextMenuCircular.innerHTML += '<div>tada</div>';
 contextMenuCircular.innerHTML += '<div class="cmc-item" style="top: 39px;left: 50px">tadata</div>';
 contextMenuCircular.innerHTML += '<div class="cmc-item" style="top: 78px;left: 100px">tadata</div>';
 */
-
+function insertRow(){
+    let cell = contextMenuCircular.event_gridCellElem;
+    if (cell) {
+        let grid = contextMenuCircular.event_gridElem.grid;
+        let qry = contextMenuCircular.event_grid.codeMirror.getValue();
+        let val = "";
+        let id = cell.id.replace(/^.*_(.*)_.*/, "$1" ) ; // gridX_1_2 --> 2
+        if (id.match(/^[0-9]+$/)) {
+            id++; // keep headline ...
+            updateGridValue(grid, qry, val, id,
+                function() {
+                    grid.insertRow(cell, id) ; // replay locally without loading ...
+                    console.debug("ROW " + id +  " inserted");
+                }
+            );
+        }
+    }
+}
 
 function addMenuItem() {
   //contextMenuCircular.style.top = "150px";
@@ -33,6 +50,7 @@ function addMenuItem() {
     , { descr: "csv", icon: 'fa fa-file', action: "contextMenuCircularClose();getUrl2GridQry(contextMenuCircular.event_grid,'data.csv');" }
     , { descr: "grid", icon: 'fa fa-file', action: "contextMenuCircularClose();createGridContainer();" }
     , { descr: "grid del", icon: 'fa fa-file', action: "contextMenuCircularClose();contextMenuCircular.event_gridElem.remove();" }
+    , { descr: "insert", icon: '', action: "contextMenuCircularClose();insertRow();" }   // --> id=row and val is null
     , "a", "b", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   var bounding = contextMenuCircular.getBoundingClientRect();
@@ -116,11 +134,13 @@ contextMenuCircularScope.addEventListener("contextmenu", (event) => {
     gridElem = gridElem.parentNode;
   }
   if (gridElem && gridElem.classList.contains("grid-with-filter")) {
-      console.debug("ContextMenu for " + gridElem.id);
+      console.debug("ContextMenu for " + gridElem.id + " cell " + event.target.id);
+      contextMenuCircular.event_gridCellElem = event.target;
       contextMenuCircular.event_gridElem = gridElem;
       contextMenuCircular.event_grid = gridElem.grid;
   } else {
       console.debug("ContextMenu without grid ");
+      contextMenuCircular.event_gridCellElem = null;
       contextMenuCircular.event_gridElem = null;
       contextMenuCircular.event_grid = null;
   }

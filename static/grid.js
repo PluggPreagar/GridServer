@@ -44,6 +44,18 @@ class Grid {
     }
   }
 
+  insertRow(elem, row) {
+    if (elem) {
+      let src = this.getIdxOf(elem).split(",");
+      let newRow = [...this.items[0]];
+      for (let c = 0; c < newRow.length; c++) {
+        newRow[c] ="";
+      }
+      this.items.splice( row, 0, newRow);
+      this.load(); // need re-numbering ids on cells ...
+    }
+  }
+
   getIdxOf(elem) {
     // reverse sorting, paging and filtering ...
     return elem.getAttribute("srcd");

@@ -25,7 +25,7 @@ function initGridInputListener(gridElem) {
                   grid.storeCell( e.target); // update data behind grid ...
                   e.target.classList.add("saved");
                   setTimeout(function() {
-                    console.debug("simulated SAVE after CHANGE-VALUE");
+                    console.debug("SAVE after CHANGE-VALUE");
                     e.target.classList.remove("modified");
                     e.target.classList.remove("saved");
                   }, 3000);
