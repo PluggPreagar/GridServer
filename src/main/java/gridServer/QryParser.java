@@ -107,15 +107,15 @@ public class QryParser {
             return !qryTokens.isEmpty() && tdDef.equals(qryTokens.get(0).tokenDefinition);
         }
 
-        void mustNext(QryLexer.TokenDefinition tdDef, boolean remove) {
-            debug( "must" , tdDef.name() );
+        void requireNext(QryLexer.TokenDefinition tdDef, boolean remove) {
+            debug( "reqr" , tdDef.name() );
             if (!isNext( tdDef, remove)){
                 System.out.println(" missing expected " + tdDef);
             }
         }
 
-        void mustNext(QryLexer.TokenDefinition tdDef) {
-            mustNext( tdDef, false);
+        void requireNext(QryLexer.TokenDefinition tdDef) {
+            requireNext( tdDef, false);
         }
 
     }
@@ -163,7 +163,7 @@ public class QryParser {
                 while ( isNext( td.WORD )) {
                     tokenShift();
                     if (isNext(td.BLOCK_ELEM_END, true)) break;
-                    mustNext( td.DELIMITER, true);
+                    requireNext( td.DELIMITER, true);
                 }
             }
             return getReturn();

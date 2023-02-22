@@ -2,3 +2,5 @@
 /static/.replit
 /static/.cache
 /static/.config
+/out
+/target

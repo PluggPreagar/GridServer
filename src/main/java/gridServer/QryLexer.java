@@ -93,7 +93,7 @@ public class QryLexer {
                         token = t;
                         Token clone = new Token( t, text);
                         tokens.add(clone);
-                        System.out.println( "[" + c + ".." + t.end + "] found " +  String.format("%-10s", t.name()) + " " + ( 0 == t.start ? "" :  String.format("%" + t.start + "s",".").replace(" ",".")) + "'" + clone.value  + "'" );
+                        System.out.println( "[" + c + ".." + t.end + "] found " +  String.format("%-20s", t.name()) + " " + ( 0 == t.start ? "" :  String.format("%" + t.start + "s",".").replace(" ",".")) + "'" + clone.value  + "'" );
                     } else {
                         System.out.println( "[" + c + ".." + t.end + "] found " + t.name()  );
                     }
